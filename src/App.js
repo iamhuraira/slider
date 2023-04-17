@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import 'h8k-components'
 
 import { image1, image2, image3, image4 } from './assets/images'
@@ -29,7 +29,7 @@ function App() {
   const [catalogs] = useState([...catalogsList])
   const [activeIndex, setActiveIndex] = useState(0)
   const [slideTimer, setSlideTimer] = useState(null)
-  const [slideDuration] = useState(3000)
+  // const [slideDuration] = useState(2000)
 
   const previousSlide = () => {
     const previousIndex = activeIndex - 1
@@ -45,13 +45,33 @@ function App() {
   }
 
 
-  const handleSlideTime = (e) => {
-    if(e.target.checked) {
-      setSlideTimer(setInterval(nextSlide, slideDuration))
-    } else {    
+  const toggleSlideShow = (e) => {
+   
+    if (e.target.checked) {
+     
+      setSlideTimer(setInterval(() => {
+        setActiveIndex(activeIndex => activeIndex + 1 === catalogs.length ? 0 : activeIndex + 1)
+        // console.log(counter)
+      }, 1500))
+     
+    }
+    else { 
+      console.log('stop')
       clearInterval(slideTimer)
     }
+
+  
   }
+
+  const [counter, setCounter] = useState(0)
+
+  const updatecounter = () => { 
+    setInterval(() => {
+      setCounter(counter => counter + 1 !== 2 ? counter + 1 : 0)
+      // console.log(counter)
+    }, 3000)
+  }
+
 
   return (
     <Fragment>
@@ -87,10 +107,17 @@ function App() {
           <input
             type='checkbox'
             data-testid='toggle-slide-show-button'
-            onClick={handleSlideTime}
+            onChange={toggleSlideShow}
           />
           <label className='ml-6'>Start Slide Show</label>
         </div>
+
+        {/* <div style={{fontSize:"45px"}}>
+          {counter}
+        </div>
+        <button onClick={updatecounter}>
+          click me
+        </button> */}
       </div>
     </Fragment>
   )

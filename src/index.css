@@ -1,5 +1,10 @@
 @import '../node_modules/h8k-design/dist/index.css';
 
+
+body{
+  min-height: calc(100vh - 75px) !important; 
+}
+
 .image-thumb {
   border: 2px solid transparent;
 }
